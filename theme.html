@@ -43,9 +43,6 @@
     {{ header_meta }}
     {% if is_login %} {{ login_form }} {% else %}
     <!--Header-->
-    
-
-
     <div class="site-header">
         <div class="container">
             <div class="row">
@@ -80,23 +77,14 @@
                 <nav class="site-nav">
                     <div class="nav-menu">
                         <ul class="nav-menu">
-                            <li><a href="{{ site.base_url}}">Blog2</a></li>
-                            
+                            <li><a href="{{ site.base_url}}">Blog</a></li>
                             <li><a class="{{ set_active( '/tag/evernote') }}" href="/tag/evernote">Evernote</a></li>
-                            
                             <li><a class="{{ set_active( '/tag/postachio') }}" href="/tag/postachio">Postach.io</a></li>
-
-                            <li><a class="{{ set_active( '/tag/quick-tip') }}" href="/tag/quick-tip">Быстрый совет</a></li>
-
-                            <li><a class="{{ set_active( '/tag/review') }}" href="/tag/review">Обзоры</a></li>
-
-                            <li><a class="{{ set_active( '/tag/etc') }}" href="/tag/etc">Прочее</a></li>
-
-                            <li style="list-style: none">{% for page in pages %}</li>
-
-                            <li><a class="{{set_active(page.permalink) }}" href="{{ page.permalink }}">{{ page.title }}</a></li>
-
-                            <li style="list-style: none">{% endfor %}</li>
+			    <li><a class="{{ set_active( '/tag/quick-tip') }}" href="/tag/quick-tip">Быстрый совет</a></li>
+			    <li><a class="{{ set_active( '/tag/review') }}" href="/tag/review">Обзоры</a></li>
+			    <li><a class="{{ set_active( '/tag/etc') }}" href="/tag/etc">Прочее</a></li>
+			    <li>{% for page in pages %}<a class="{{set_active(page.permalink) }}" href="{{ page.permalink }}">{{ page.title }}</a>
+			    {% endfor %}</li>
                         </ul>
                     </div>
                 </nav>{% endif %}
@@ -105,17 +93,15 @@
                  {% if site.tags %}
 
                 <div class="tags" name="top">
-                    <p>Посмотреть все записи по тегу:</p>{% for tag in site.tags %} {% if tag not in skiptags %}{% endif %} <a href="/tag/{{ tag.name }}">#{{ tag.name }}</a> {% endfor %}
+                    <p>Посмотреть записи по тегу:</p>{% for tag in site.tags %} {% if tag not in skiptags %}{% endif %} <a href="/tag/{{ tag.name }}">#{{ tag.name }}</a> {% endfor %}
                 </div>{% endif %} <!--End Tags-->
 
                 <div class="site-content">
                     {% if is_home or is_tag %} {% if is_tag %}
 
-                    <h2 class="tag-header">Показаны все посты с тегом {{ tag }}:</h2>{% endif %} {% if posts %}
-
+                    <h2 class="tag-header">Показаны последние посты с тегом {{ tag }}:</h2>{% endif %} {% if posts %}
                     <section class="blog-feed">
                         {% for post in posts %}
-
                         <article class="blog-post feed-item">
                             <header class="post-header">
                                 <h2 class="post-title"><a href="{{ post.permalink }}">{{ post.title }}</a></h2>
@@ -134,7 +120,6 @@
                                     </div>
                                 </div>
                             </header>
-
                             <div class="post-body">
                                 <div class="post-content" data-type-cleanup="true">
                                     {{ post.content }}
@@ -142,12 +127,12 @@
                                 </div>
                             </div>
                         </article>{% endfor %}
-                    </section>{% else %}
-
+                    </section>
+                    {% else %}
                     <div class="blog-feed">
                         <h2 class="title"><em>Пока нет постов :(</em></h2>
-                    </div>{% endif %} {% if not is_tag and posts %} {% if pagination.next or pagination.prev %}
-
+                    </div>{% endif %} {% if not is_tag and posts %}
+                    {% if pagination.next or pagination.prev %}
                     <div class="blog-pagination">
                         {% if pagination.prev %}<a class="pagination-newer" href="{{ pagination.prev }}" title="Новые записи ">← Новые записи</a>{% endif %}
                         {% if pagination.next %}<a class="pagination-older" href="{{ pagination.next }}" title="Старые записи ">Старые записи →</a>{% endif %}
@@ -214,9 +199,10 @@
                             <hr class="large">
                             <div id="disqus_thread"></div><script type="text/javascript">
                                                 var disqus_shortname = '{{ site.disqus }}';
+                                                var disqus_identifier = '{{ post.title }}';
                                                 (function() {
                                                     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                                                    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                                                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
                                                     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
                                                 })();
                             </script> <noscript>Пожалуйста, включите JavaScript чтобы <a href="http://disqus.com/?ref_noscript">увидеть комментарии.</a></noscript> <a class="dsq-brlink" href="http://disqus.com">Комментарии от <span class="logo-disqus">Disqus</span></a>
@@ -284,10 +270,11 @@
                             <hr class="large">
 
                             <div id="disqus_thread"></div><script type="text/javascript">
-                    var disqus_shortname = '{{ site.disqus }}';
+                            var disqus_shortname = '{{ site.disqus }}';
+                            var disqus_identifier = '{{ post.title }}';
                                                 (function() {
                                                     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                                                    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                                                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
                                                     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
                                                 })();
                             </script> <noscript>Пожалуйста, включите JavaScript чтобы <a href="http://disqus.com/?ref_noscript">увидеть комментарии.</a></noscript> <a class="dsq-brlink" href="http://disqus.com">Комментарии от <span class="logo-disqus">Disqus</span></a>
